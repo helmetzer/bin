@@ -1,0 +1,42 @@
+#!/usr/bin/perl -w
+#!/usr/bin/perl -w -d:ptkdb
+#
+# Findet alle Dateien in Unterverzeichnissen
+#
+
+use strict;
+use File::Find;
+# use MP3::Tag;
+
+our $dir1 = "$ENV{HOME}/Musik";
+our @Files;
+
+# chdir($dir1) or die "Cannot chdir to $dir1";
+
+
+sub wanted {
+
+-l or return;
+my $target = readlink;
+print $_, " is a symlink pointing to ", $target, "\n";
+
+#    my $file1 = $File::Find::name;
+#    push  @Files, substr($file1, 2) if(-f $_);
+#   return unless $file1 =~ /\.mp3$/i;
+#   my $mp3 = MP3::Tag->new($_);
+#   my ($title, $track, $artist, $album, $comment, $year, $genre) = $mp3->autoinfo();
+#   my $length = $mp3->time_mm_ss();
+ 
+#   print join(";", substr($file1, 2), $artist, $album, $title ,$length, "\n");
+#    exit;
+
+} # wanted
+
+{
+
+find(\&wanted, ".");
+
+@Files = sort @Files;
+print join(";", $_, 1, "\n") for (@Files);
+}
+__END__
