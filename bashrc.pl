@@ -14,8 +14,6 @@ our @lines;
 my $eol = "\n";
 
 my $file;
-my $subs;
-my $rex;
 my $lastline;
 
 my %files = (
@@ -74,7 +72,7 @@ sub search {
 
   if(ref($re3)) {
     $ibegin = firstidx { $_ =~ $re3 } @lines;
-    die qq(not found: "$rex") if($ibegin < 0);
+    die qq(not found: "$re3") if($ibegin < 0);
     return ($ibegin - 1, $ibegin);
   } # if
   
