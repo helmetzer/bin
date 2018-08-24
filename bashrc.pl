@@ -1,33 +1,36 @@
 #!/usr/bin/perl -w
+#!/usr/bin/perl -w -d:ptkdb
 {
 use strict;
 
+# usage is: bashrc.pl KEY
+#
+# KEY is a key for the file to be modified, defaults to BASHRC
+#
 use List::MoreUtils qw(firstidx);
 
 our @lines;
 
 my $eol = "\n";
 
-my $file = $ENV{HOME};
+my $file;
 my $subs;
 my $rex;
 my $lastline;
 
-my $bashrcmods = <<EOF;
+my %files = (
+  BASHRC => [ "$ENV{HOME}/.bashrc",
+    'history', # match line to be inserted before
+    <<EOF,
 alias mc='. /usr/lib/mc/mc-wrapper.sh'
 alias sudo='sudo -E'
 alias cp='cp -a'
 export TERM=xterm-256color # for mate-terminal which corrupts it
 EOF
-
-# bei mate kein xterm vorhanden.
-# wird aber benötigt um etwa mc vom Desktop zu starten
-# deshalb als root in /usr/bin:
-# ln mate-terminal xterm
-# PATH wird in $HOME/.profile gesetzt
-# wiederum gerufen von login und auch vom mate desktop
-
-my $profilemods = <<'EOF';
+  ],
+  PROFILE => [ "$ENV{HOME}/.profile",
+    'private',
+    <<'EOF',
 export COLORTERM=truecolor # für mc
 export EDITOR=gvim # für mc
 if test -n "$GDMSESSION" 
@@ -38,11 +41,17 @@ else
 fi
 umask 002
 EOF
+  ],
+); # files
+
+# bei mate kein xterm vorhanden.
+# wird aber benötigt um etwa mc vom Desktop zu starten
+# PATH wird in $HOME/.profile gesetzt
+# wiederum gerufen von login und auch vom mate desktop
 
 my $localstring = "### local modifications";
 my $localbegin = $localstring . " - BEGIN";
 my $localend = $localstring . " - END";
-
 
 sub search {
   my ($re1, $re2, $re3) = @_;
@@ -59,7 +68,7 @@ sub search {
     if($ibegin >= 0) {
       $iend = firstidx { $_ =~ $re2 } @lines[$ibegin .. $lastline];
       die "no END found" if($iend < 0);
-      return ($ibegin - 1, $iend + 1);
+      return ($ibegin - 1, $ibegin + $iend + 1);
     } # if
   } # if
 
@@ -72,22 +81,17 @@ sub search {
   die "cannot modify $file";
 } # search
 
-if ($0 =~ /bashrc/) { # caller bashrc.pl or profile.pl - may be hardlinked
-  $file .= "/.bashrc";
-  $rex = 'history'; # line to be inserted before
-# $rex = 'never seen';  # TEST
-  $subs = \$bashrcmods;
-} else {
-  $file .= "/.profile";
-  $rex = 'private';
-  $subs = \$profilemods;
-}
+my $key;
+{no warnings; $key = uc($ARGV[0]) || "BASHRC"};
+exists($files{$key}) or die "nothing known about $key";
+my $key2 = $files{$key};
+$file = $key2->[0];
 
 open(my $fh, '+<', $file) or die;
 @lines = <$fh>;
 $lastline = $#lines;
 
-my ($ib, $ia) = search(qr/$localbegin/, qr/$localend/, qr/$rex/);
+my ($ib, $ia) = search(qr/$localbegin/, qr/$localend/, qr/$key2->[1]/);
 
 # before and after match
 
@@ -98,7 +102,7 @@ truncate $fh, 0;
 
 print $fh @lines[0 .. $ib];
 print $fh $localbegin, $eol;
-print $fh $$subs;
+print $fh $key2->[2];
 print $fh $localend, $eol;
 print $fh @lines[$ia .. $lastline];
 
