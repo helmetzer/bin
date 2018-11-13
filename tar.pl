@@ -110,7 +110,7 @@ for (keys %TarJobs) {
      "--exclude", "Alt", "--exclude-tag", "CACHEDIR.TAG");
     push(@Tars, "--newer", $tsFile) unless ($full);
     push(@Tars, @{$TarJobs{$_}{TOTAR}});
-    unshift @Tars, qw(echo);
+#   unshift @Tars, qw(echo);
     print ((system @Tars), "\n");
 } # for
 
