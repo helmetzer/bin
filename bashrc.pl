@@ -35,6 +35,7 @@ if test -n "$GDMSESSION"
 then
   hostname | grep 'HP-Laptop' && export MC_SKIN=seasons-winter16M.ini
 else
+  hostname | grep 'HP-Laptop' && setupcon -f
   export MC_SKIN=/home/horst/.mc/skins/default.ini # path search not working
 fi
 umask 002
@@ -46,6 +47,8 @@ EOF
 # wird aber benötigt um etwa mc vom Desktop zu starten
 # PATH wird in $HOME/.profile gesetzt
 # wiederum gerufen von login und auch vom mate desktop
+#
+# für setupcon evtl. /etc/default/console.setup ändern
 
 my $localstring = "### local modifications";
 my $localbegin = $localstring . " - BEGIN";

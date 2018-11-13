@@ -10,6 +10,9 @@ my $eol = "\n";
 
 my $full = '';
 
+my $host = qx(hostname);
+# print( $host, length($host), $eol); exit;
+my $IsHP = $host =~ /HP/;
 my %TarJobs = (
     etc => {
         BASEDIR => "/",
@@ -21,8 +24,7 @@ my %TarJobs = (
     },
     daten => {
         BASEDIR => "/daten/Users/Horst",
-#       TOTAR => [ "Dokumente", "eBooks", "Repository", ],
-        TOTAR => [ "Dokumente", "eBooks", ],
+        TOTAR => [ "Dokumente", "eBooks", $IsHP ? () : "Repository", ],
     },
 #    bettina => {
 #        BASEDIR => "/daten/Users/Bettina",
@@ -37,11 +39,9 @@ my %TarJobs = (
 # my $TarDir = "/media/72AD-2013/Mint";
 # my $TarDir = "/media/horst/Daten/Users/Horst/Sicherung/Mint18.3";
 
-my $host = qx(hostname);
-# print( $host, length($host), $eol); exit;
-my $TarDir = $host =~ /HP/ ?
+my $TarDir = $IsHP ?
    "/daten/Users/Horst/Sicherung/Mint19" :
-   "/daten/Users/Horst/Sicherung/Mint18.3";
+   "/daten/Users/Horst/Sicherung/Mint19";
 
    # print( $TarDir, $eol); exit;
 my $tsSuffix = ".ts";
@@ -110,7 +110,7 @@ for (keys %TarJobs) {
      "--exclude", "Alt", "--exclude-tag", "CACHEDIR.TAG");
     push(@Tars, "--newer", $tsFile) unless ($full);
     push(@Tars, @{$TarJobs{$_}{TOTAR}});
-#   unshift @Tars, qw(echo);
+    unshift @Tars, qw(echo);
     print ((system @Tars), "\n");
 } # for
 
