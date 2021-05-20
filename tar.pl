@@ -24,7 +24,9 @@ my %TarJobs = (
     },
     daten => {
         BASEDIR => "/daten/Users/Horst",
-        TOTAR => [ "Dokumente", "eBooks", $IsHP ? () : "Repository", ],
+        TOTAR => [ "Dokumente", "eBooks", 
+          "mozilla", ".thunderbird",
+          $IsHP ? () : "Repository", ],
     },
 #    bettina => {
 #        BASEDIR => "/daten/Users/Bettina",
@@ -40,8 +42,8 @@ my %TarJobs = (
 # my $TarDir = "/media/horst/Daten/Users/Horst/Sicherung/Mint18.3";
 
 my $TarDir = $IsHP ?
-   "/daten/Users/Horst/Sicherung/Mint19" :
-   "/daten/Users/Horst/Sicherung/Mint19";
+   "/daten/Users/Horst/Sicherung/Mint20" :
+   "/daten/Users/Horst/Sicherung/Mint20";
 
    # print( $TarDir, $eol); exit;
 my $tsSuffix = ".ts";
