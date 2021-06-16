@@ -3,6 +3,7 @@
 KMIN = 2500
 KMAX = 5000
 
+# 2021 11
 angelegt = [
         14160,
         14036,
@@ -12,7 +13,20 @@ angelegt = [
         ]
 
 frei = 14160 + 3029
-# frei = 14160 + 1029
+
+cap = 120
+preis = 118.9
+
+# 2021 12
+angelegt = [
+        14036,
+        14478,
+        14824,
+        14500,
+        14040,
+        ]
+
+frei = 14160 + 2500
 
 cap = 120
 preis = 118.9
@@ -45,4 +59,5 @@ while rest < KMIN :
 
 print('Stueck', stueck)
 print('Rest', rest)
+print('Neu angelegt', stueck*cap)
 

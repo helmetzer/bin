@@ -3,7 +3,7 @@
 {
 use strict;
 
-# usage is: bashrc.pl KEY
+# usage is: bashrc.pl [ -test] KEY
 #
 # KEY is a key for the file to be modified, defaults to BASHRC
 #
@@ -12,6 +12,7 @@ use List::MoreUtils qw(firstidx);
 our @lines;
 
 my $eol = "\n";
+my $daten = '/daten/Users/Horst/Dokumente';
 
 my $file;
 my $lastline;
@@ -23,12 +24,14 @@ my %files = (
 alias mc='. /usr/lib/mc/mc-wrapper.sh'
 alias sudo='sudo -E'
 alias cp='cp -a'
+alias c='cd $daten'
+alias t='cd /daten/tmp'
 export TERM=xterm-256color # for mate-terminal which corrupts it
 EOF
   ],
   PROFILE => [ "$ENV{HOME}/.profile",
     'private',
-    <<'EOF',
+    <<'EOF' .
 export COLORTERM=truecolor # für mc
 export EDITOR=gvim # für mc
 if test -n "$GDMSESSION" 
@@ -40,6 +43,7 @@ else
 fi
 umask 002
 EOF
+     'export CDPATH=' . $daten . $eol
   ],
 ); # files
 
@@ -83,7 +87,12 @@ sub search {
 } # search
 
 my $key;
-{no warnings; $key = uc($ARGV[0]) || "BASHRC"};
+my $test;
+{no warnings;
+  $test = $ARGV[0];
+  $test = substr($test, 0, 2) eq "-t";
+  shift(@ARGV) if $test;
+  $key = uc($ARGV[0]) || "BASHRC"};
 exists($files{$key}) or die "nothing known about $key";
 my $key2 = $files{$key};
 $file = $key2->[0];
@@ -101,7 +110,14 @@ my ($ib, $ia) = search(qr/$localbegin/, qr/$localend/, qr/$key2->[1]/);
 seek $fh, 0, 0;
 truncate $fh, 0;
 
-print $fh @lines[0 .. $ib];
+my $mes = 'echo entering ';
+my $mesre = qr/$mes/;
+my $is = 0;
+
+$is++ while $lines[$is] =~ $mesre;
+
+print $fh $test ? '' : '# ', $mes, $key, $eol;
+print $fh @lines[$is .. $ib];
 print $fh $localbegin, $eol;
 print $fh $key2->[2];
 print $fh $localend, $eol;

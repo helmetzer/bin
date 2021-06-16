@@ -24,8 +24,9 @@ filetype plugin on
 
 " Horsts settings
 set expandtab
-set sw=2
+set sw=4
 set cindent
+set list
 
 " allow backspacing over everything in insert mode
 set backspace=indent,eol,start
