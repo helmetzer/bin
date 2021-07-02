@@ -1,9 +1,9 @@
 #!/usr/bin/python
 
-KMIN = 2500
+KMIN = 2800
 KMAX = 5000
 
-# 2021 11
+# 2021 12
 angelegt = [
         14160,
         14036,
@@ -12,24 +12,10 @@ angelegt = [
         14500,
         ]
 
-frei = 14160 + 3029
+frei = 32936 - 14160 - 2500
 
-cap = 120
-preis = 118.9
-
-# 2021 12
-angelegt = [
-        14036,
-        14478,
-        14824,
-        14500,
-        14040,
-        ]
-
-frei = 14160 + 2500
-
-cap = 120
-preis = 118.9
+cap = 125
+preis = 123.88
 
 # print('My first python script')
 
