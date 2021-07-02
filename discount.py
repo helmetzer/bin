@@ -5,17 +5,17 @@ KMAX = 5000
 
 # 2021 12
 angelegt = [
-        14160,
         14036,
         14478,
         14824,
         14500,
+        108*125
         ]
 
-frei = 32936 - 14160 - 2500
+frei = 19554 - 2500 - 800
 
 cap = 125
-preis = 123.88
+preis = 123.58
 
 # print('My first python script')
 
