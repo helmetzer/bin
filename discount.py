@@ -3,19 +3,19 @@
 KMIN = 2800
 KMAX = 5000
 
-# 2022 02
+# 2022 03
 angelegt = [
-        6840 + 6200,
         14824,
         14500,
         108*125,
         108*125,
+        111*125 + 50*124,
         ]
 
-frei = 18600
+frei = 12000
 
-cap = 125
-preis = 123.84
+cap = 124
+preis = 122.47
 
 # print('My first python script')
 
@@ -27,6 +27,8 @@ print('frei', frei)
 la = len(angelegt)
 assert la == 5, "angelegt falsche länge"
 ziel = round((frei + s - KMAX)/(la + 1))
+print('Ziel', ziel)
+ziel -= 6200  #  Achtung wieder ändern
 stueck = round(ziel/cap)
 print('Ziel', ziel)
 print('Stueck', stueck)
