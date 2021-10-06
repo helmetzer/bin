@@ -27,8 +27,7 @@ print('frei', frei)
 la = len(angelegt)
 assert la == 5, "angelegt falsche länge"
 ziel = round((frei + s - KMAX)/(la + 1))
-print('Ziel', ziel)
-ziel -= 6200  #  Achtung wieder ändern
+#  ziel -= 6200
 stueck = round(ziel/cap)
 print('Ziel', ziel)
 print('Stueck', stueck)
