@@ -1,0 +1,13 @@
+et enn Betriebssystem abhängig, dann für
+
+System:
+  Kernel: 5.4.0-72-generic x86_64 bits: 64 Desktop: Cinnamon 4.8.6 
+  Distro: Linux Mint 20.1 Ulyssa
+
+vim und gvim werden aus /usr/bin gerufen und sind Softlinks nach
+
+/etc/alternatives/*  # siehe dazu https://askubuntu.com/questions/484561/what-is-etc-alternatives-used-for
+
+Dort wiederum Softlinks, so dass immer /usr/bin/vim.gtk3 gerufen wird.
+
+
