@@ -2,20 +2,21 @@
 
 KMIN = 2800
 KMAX = 5000
+KMAX = 4400  #  TEMP
 
-# 2022 04
+# 2022 05
 angelegt = [
-        125*116,
         108*125,
         108*125,
         111*125,
         112*124,
+        115*121,
         ]
 
-frei = 18680
+frei = 3600 + 14500
 
-cap = 121
-preis = 119.13
+cap = 124
+preis = 122.52
 
 # print('My first python script')
 
