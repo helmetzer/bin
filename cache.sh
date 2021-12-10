@@ -4,34 +4,26 @@
 
 TAG=CACHEDIR.TAG
 HOST=$(hostname)
-echo $HOST
-case $HOST in
-    orst-HP-Laptop-15-bs1xx)
-        echo HP
-        ;;
-    *)
-        echo not HP
-        ;;
-esac
+# HOST=debian
+# echo $HOST
 
 
 cd $HOME
-for file in .cache \
-   .mozilla/firefox/"Crash Reports"  \
-   tmp \
-   .thunderbird/"Crash Reports" \
-   dwhelper \
-   ; do
-   touch "$file"/$TAG
-done
+FILES=.cache:tmp:dwhelper
+case $HOST in
+    debian)
+        FILES=$FILES:.mozilla:.thunderbird:Downloads
+        ;;
+    *)
+#   horst-HP-Laptop-15-bs1xx)
+    FILES="$FILES:.mozilla/firefox/Crash Reports"
+    FILES="$FILES:.thunderbird/Crash Reports"
+        ;;
+esac
 
-test $HOST = debian || { echo not debian; exit; }
+IFS=:
 
-echo yes we are on debian
-
-for file in .mozilla \
-   .thunderbird \
-   ; do
+for file in $FILES ; do
    touch "$file"/$TAG
 done
 
