@@ -13,6 +13,9 @@ my $full = '';
 my $host = qx(hostname);
 # print( $host, length($host), $eol); exit;
 my $IsHP = $host =~ /HP/;
+chomp $host
+my $IsDebian = $host eq "debian";
+
 my %TarJobs = (
     etc => {
         BASEDIR => "/",
@@ -46,6 +49,11 @@ my $TarDir = $IsHP ?
    "/daten/Users/Horst/Sicherung/Mint20";
 
    # print( $TarDir, $eol); exit;
+if($IsDebian) {
+   delete $TarJobs{daten};
+   $TarDir = "/Sicherung";
+} 
+
 my $tsSuffix = ".ts";
 
 sub getLastFullDump() {
@@ -112,7 +120,7 @@ for (keys %TarJobs) {
      "--exclude", "Alt", "--exclude-tag", "CACHEDIR.TAG");
     push(@Tars, "--newer", $tsFile) unless ($full);
     push(@Tars, @{$TarJobs{$_}{TOTAR}});
-#   unshift @Tars, qw(echo);
+#   unshift @Tars, qw(echo); # uncomment for test
     print ((system @Tars), "\n");
 } # for
 
