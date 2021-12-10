@@ -13,7 +13,7 @@ my $full = '';
 my $host = qx(hostname);
 # print( $host, length($host), $eol); exit;
 my $IsHP = $host =~ /HP/;
-chomp $host
+chomp $host;
 my $IsDebian = $host eq "debian";
 
 my %TarJobs = (
