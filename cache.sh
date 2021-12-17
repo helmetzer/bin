@@ -9,15 +9,16 @@ HOST=$(hostname)
 
 
 cd $HOME
-FILES=.cache:tmp:dwhelper
+FILES=.cache:tmp:dwhelper:.local/lib:.config/google-chrome:.config/session
 case $HOST in
-    debian)
+    debian|horst-LIFEBOOK-AH530)
         FILES=$FILES:.mozilla:.thunderbird:Downloads
         ;;
-    *)
-#   horst-HP-Laptop-15-bs1xx)
+    horst-HP-Laptop-15-bs1xx)
     FILES="$FILES:.mozilla/firefox/Crash Reports"
     FILES="$FILES:.thunderbird/Crash Reports"
+        ;;
+    *)
         ;;
 esac
 
