@@ -4,25 +4,24 @@ KMIN = 2800
 KMAX = 5000
 # KMAX = 4400  #  TEMP
 
-# 2022 06
+# 2022 07
 angelegt = [
-        108*125,
         111*125,
         112*124,
         115*121,
         112*124,
+        110*124,
         ]
 
-frei = 3025 + 14160
+frei = 17000
 
-cap = 124
-preis = 122.56
-
-# print('My first python script')
+cap = 122   #  DE000VX3Y4F2   115 zu 120,29 - 1,90 Prov.
+preis = 120.28
 
 s = sum(angelegt)
 
 print('angelegt', s)
+print(angelegt)
 print('frei', frei)
 
 la = len(angelegt)
