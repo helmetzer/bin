@@ -1,0 +1,9 @@
+# sourcing with parameters
+
+echo $1
+echo $2
+
+foo()
+{
+    echo foo
+}
