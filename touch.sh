@@ -11,9 +11,5 @@ else
     shift
 fi
 
-while [ $# -ne 0 ]
-do
-touch -t 20${YYMMDD}1200 "$1" 
-    shift
-done
+touch -t 20${YYMMDD}1200 "$@" 
 
