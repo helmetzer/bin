@@ -4,3 +4,4 @@ youtube-dl
 andep
 FF-Password-Exporter-1.2.0-x86_64.AppImage
 test*
+__pycache__/
