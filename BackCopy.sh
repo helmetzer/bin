@@ -8,7 +8,7 @@ DELETE=--delete
 
 BASEDIR=Users/Horst
 FROM=/daten/$BASEDIR
-TO=/daten2/$BASEDIR
+TO=/daten2/Users/horst
 
 call_rsync () {
   rsync $DRY $DELETE -i -a -u --stats --no-perms $FROM/$1 $TO
@@ -22,7 +22,7 @@ call_rsync () {
 
   FROM=$HOME/.thunderbird
   MAIL_PROFILE=eiriiape.default
-  call_rsync $MAIL_PROFILE
+#  call_rsync $MAIL_PROFILE
 } > lll
 
 # rsync $DRY $DELETE --modify-window=4000 --verbose --archive --update --stats --no-perms --no-owner --no-group \

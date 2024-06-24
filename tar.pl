@@ -9,6 +9,7 @@ use Getopt::Long;
 my $eol = "\n";
 
 my $full = '';
+my $test = '';
 
 my $host = qx(hostname);
 # print( $host, length($host), $eol); exit;
@@ -26,27 +27,22 @@ my %TarJobs = (
         TOTAR => [ ".", ],
     },
     daten => {
-        BASEDIR => "/daten/Users/Horst",
+        BASEDIR => "/daten/Users/horst",
         TOTAR => [ "Dokumente", "eBooks", 
           "mozilla", ".thunderbird",
-          $IsHP ? () : "Repository", ],
+#         $IsHP ? () : "Repository", 
+              ],
     },
 #    bettina => {
 #        BASEDIR => "/daten/Users/Bettina",
 #        TOTAR => [ ".", ],
 #    },
-#    icedove => {
-#        BASEDIR => "/media/disk1part5/horst/.thunderbird",
-#        TOTAR => [ ".", ],
 #    },
 );
 
-# my $TarDir = "/media/72AD-2013/Mint";
-# my $TarDir = "/media/horst/Daten/Users/Horst/Sicherung/Mint18.3";
-
 my $TarDir = $IsHP ?
-   "/daten/Users/Horst/Sicherung/Mint20" :
-   "/daten/Users/Horst/Sicherung/Mint20";
+   "/daten/Users/horst/Sicherung/Mint20" :
+   "/daten/Users/horst/Sicherung/Mint20";
 
    # print( $TarDir, $eol); exit;
 if($IsDebian) {
@@ -84,7 +80,9 @@ sub create {
 
 my $ts = time();
 
-GetOptions("full" => \$full);
+GetOptions("full" => \$full,
+           "test" => \$test,
+       );
 
 my $tsFile = '';
 
@@ -120,7 +118,8 @@ for (keys %TarJobs) {
      "--exclude", "Alt", "--exclude-tag", "CACHEDIR.TAG");
     push(@Tars, "--newer", $tsFile) unless ($full);
     push(@Tars, @{$TarJobs{$_}{TOTAR}});
-#   unshift @Tars, qw(echo); # uncomment for test
+    unshift @Tars, qw(echo) if($test);
+    #    print ("@Tars", "\n"); exit;  # TEST
     print ((system @Tars), "\n");
 } # for
 
