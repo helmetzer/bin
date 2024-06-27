@@ -12,7 +12,7 @@ use List::MoreUtils qw(firstidx);
 our @lines;
 
 my $eol = "\n";
-my $daten = '/daten/Users/Horst/Dokumente';
+my $daten = '/daten/Users/horst/Dokumente';
 
 my $file;
 my $lastline;
