@@ -1,10 +1,20 @@
 #   module steuer
 
 jahr = 2024
-# 2023
-if jahr == 2023:
+
+if jahr == 2022:
+    grund = 10347
+    next1 = 14926
+    next2 = 58596
+    next3 = 277825
+    f1 = 1088.67
+    f2 = 206.43
+    s1 = 869.32
+    s2 = 9336.45
+    s3 = 17671.2
+elif jahr == 2023:
     grund = 10908
-    next = 15999
+    next1 = 15999
     next2 = 62809
     next3 = 277825
     f1 = 979.18
@@ -16,7 +26,7 @@ else:
 
     # 2024
     grund = 11604
-    next = 17005
+    next1 = 17005
     next2 = 66760
     next3 = 277825
     f1 = 922.98
@@ -40,17 +50,18 @@ def kags(von):
 
     return k1*ag*von
 
-def steuer(von):
+def steuer(von):  # ohne Kirchensteuer, ohne Soli
 
     if von <= grund:
         st = 0
 
-    elif von <= next:
+    elif von <= next1:
         y = (von - grund)/10000
         st = (f1*y + 1400)*y
 
     elif von <= next2:
-        y = (von - next)/10000
+        y = (von - next1)/10000
+#       print(y)
         st = (f2*y + 2397)*y + s1
 
     elif von <= next3:
@@ -59,4 +70,4 @@ def steuer(von):
     else:
         st = 0.45*von - s3
 
-    return st*k2
+    return st
