@@ -1,19 +1,18 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 
 
 # veraltet
 #
 from steuer import steuer, ags, kags
 
-sonst = 11386  # 2023
-sonst = 11900  # 2024
+sonst = 10435
 
 kap = 10000
-fak = 1.08
 fak = 1.0
+fak = 1.08
 s = round(steuer(sonst)*fak)
 
-while kap <= 40000:
+while kap <= 50000:
 
     ohnekap = round(s + ags(kap))
     mitkap = round(steuer(sonst - kags(kap) - 1064 + kap)*fak)

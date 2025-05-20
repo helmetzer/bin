@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 
 
 from steuer import steuer, ags, kags
@@ -40,14 +40,14 @@ def abgeltung(sonst, kap):
 
 
 # sonst = 15307 + 1064 + 103 - 5364
-sonst = 12000
-kap = 20000
+sonst = 10435
+kap = 10000
 
-while kap <= 40000:
+while kap <= 50000:
 
     s1 = individuell(sonst, kap)
 
     s2 = abgeltung(sonst, kap)
-    print(kap, round(s1), round(s2))
+    print(kap, round(s1), round(s2), round(s2 - s1))
     kap += 1000
 
