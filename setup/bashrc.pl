@@ -26,6 +26,7 @@ alias sudo='sudo -E'
 alias cp='cp -a'
 alias c='cd $daten'
 alias t='cd /daten/tmp'
+alias ca='cd $daten/Bucks/atom'
 export TERM=xterm-256color # for mate-terminal which corrupts it
 EOF
   ],

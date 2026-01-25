@@ -5,7 +5,7 @@ if [ "$NEMO_SCRIPT_WINDOW_GEOMETRY" ]
 then
 
     YYMMDD=$(zenity --width=600 --entry --text="YYMMDD eingeben" \
-        --entry-text=YYMMDD)
+        --entry-text=26)
 else
     YYMMDD="$1"
     shift

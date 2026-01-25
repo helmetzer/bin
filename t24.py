@@ -39,7 +39,6 @@ def abgeltung(sonst, kap):
     return s1 + s2
 
 
-# sonst = 15307 + 1064 + 103 - 5364
 sonst = 10435
 kap = 10000
 
