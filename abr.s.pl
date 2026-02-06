@@ -1,15 +1,23 @@
 #!/usr/bin/perl -w
 #
-# Einlesen einer Wertpapierabrechnung
+# Einlesen einer Wertpapierabrechnung von Scalable
 # Vorher umwandeln: pdftotext foo.pdf
 # Synopsis: cmd.pl file ...
 use strict;
+# use re 'strict';
+
 
 {
     our $n = "\n";
-    our $depot = "1242496";
+    our $depot = "5177528274";
+
     my $fh;
     my $file;
+
+    my $regisin = qr/^[A-Z0-9]{12}$/ ;
+    my $regtag = qr/^(.*) \d\d:\d\d:\d\d/ ;
+    my $reganzahl = qr/^([\d,]+) Stk\./ ;
+    my $regpreis = qr/^([\d,]+) EUR/ ;
 
     FILE: while($file = shift)
     {
@@ -20,22 +28,24 @@ use strict;
         LINE: for my $line (@lines)
         # ignorieren, wenn Depotnummer nicht gefunden
         {
-            next LINE unless $found = index($line, "Stamm-Nr") >= 0;
-            $found = index($line, $depot) >= 0;
-            last LINE;
+            $found = index($line, $depot) >= 0 and last LINE;
         } # LINE
 
         unless($found)
         {
-            print "uebersprungen: ", $file, $n;
+            print "uebersprungen 1: ", $file, $n;
             next FILE;
         }
 
         # ignorieren, wenn Wertpapierabrechnung nicht gefunden
         LINE: for my $line (@lines)
         {
-            $found = index($line, "Wertpapierabrechnung:") == 0
-                and $typ = substr($line, 22, -1) and last LINE;
+            $typ = "Kauf";
+            $found = index($line, $typ) == 0
+                and last LINE;
+            $typ = "Verkauf";
+            $found = index($line, $typ) == 0
+                and last LINE;
         } # LINE
 
         unless($found)
@@ -45,35 +55,34 @@ use strict;
         }
 #       Suche nach diversen Merkmalen
         my $count = 0;
-        my $reg = qr/^[,\d]+$/ ;
         my ($tag, $anzahl, $preis, $isin);
         LINE: for my $line (@lines)
         {
-            if(index($line, "Auftragsdatum") == 0)
+            if($line =~ $regtag)
             {
-                $tag = substr($line, 15, 10);
+                $tag = $1;
                 $count++;
             }
-            elsif(index($line, "STK") == 0)
+            elsif($line =~ $reganzahl)
             {
-                $anzahl = substr($line, 4, -1);
+                $anzahl = $1;
                 $count++;
             }
-            elsif(index($line, "ISIN") == 0)
+            elsif($line =~ $regisin)
             {
-                $isin = substr($line, 6, -1);
+                chop($isin = $line);
                 $count++;
             }
-            elsif($line =~ $reg)
+            elsif(not $preis and $line =~ $regpreis)
             {
-                chop($preis = $line);
+                $preis = $1;
                 $count++;
             }
             last LINE if $count == 4;
         } # LINE
         $anzahl = "-$anzahl" if $typ eq "Verkauf";
-        print(join(";", $tag, $file, $anzahl, $preis, $typ,
-                $isin, $depot, $n));
+        print(join(";", $tag, $anzahl, $preis, $typ,
+                $isin, $depot, $file, $n));
 
     } # FILE
 }
