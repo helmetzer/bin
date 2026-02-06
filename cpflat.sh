@@ -2,6 +2,10 @@
 
 # set -x # debug
 # 
+# finde Dateien die $1 im Namen haben im Verzeichnisbaum DIR
+# Erzeuge Symlinks im aktuellen Verzeichnis.
+# Nicht gut fuer Blanks im Dateinamen
+#
 # DIR=/daten/Users/horst/Dokumente/Baader
 
 
@@ -22,6 +26,6 @@ cleanup()
 trap cleanup  0 1 2 3 6
 
 
-find "${DIR:-/daten/Users/horst/Dokumente/ING-DiBa}" \
-    -name "*$1*"  -exec mycopy '{}' \;
+for item in $(find "${DIR:-/daten/Users/horst/Dokumente/ING-DiBa}" \
+    -name "*$1*"); do mycopy "$item"; done
 
