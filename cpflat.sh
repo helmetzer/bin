@@ -2,19 +2,26 @@
 
 # set -x # debug
 # 
-DIR=/daten/Users/horst/Dokumente/ING-DiBa
+# DIR=/daten/Users/horst/Dokumente/Baader
 
 
-CC=x.$$.sh
-cat <<'eof' > $CC
-B=$(basename "$1")
-D=$(date -I -r "$1")
-cp -a "$1" "./$D.$B"
-eof
+mycopy ()
+{
+    local B D
 
-# echo "*$1*" ; exit
+    B=$(basename "$1")
+    D=$(date -I -r "$1")
+    cp --symbolic-link "$1" "./$D.$B" # symbolic link
+}
 
-find "$DIR" -name "*$1*"  -exec sh $CC '{}' \;
+cleanup()
+{
+    ls ;
+}
 
-rm $CC
+trap cleanup  0 1 2 3 6
+
+
+find "${DIR:-/daten/Users/horst/Dokumente/ING-DiBa}" \
+    -name "*$1*"  -exec mycopy '{}' \;
 
