@@ -61,10 +61,11 @@ use strict;
             }
             elsif(index($line, "ISIN") == 0)
             {
-                $isin = substr($line, 6, -1);
+                $isin = substr($line, 6, 12);
+#               print $line, $isin, $n;
                 $count++;
             }
-            elsif($line =~ $reg)
+            elsif(not $preis and $line =~ $reg)
             {
                 chop($preis = $line);
                 $count++;
@@ -74,6 +75,7 @@ use strict;
         $anzahl = "-$anzahl" if $typ eq "Verkauf";
         print(join(";", $tag, $anzahl, $preis, $typ,
                 $isin, $depot, $file, $n));
+
 
     } # FILE
 }

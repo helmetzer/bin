@@ -5,11 +5,12 @@
 # Synopsis: cmd.pl file ...
 use strict;
 # use re 'strict';
-
+use abr;
 
 {
     our $n = "\n";
-    our @Depots = qw(8010194141 BS8305449430);
+    our @Depots = qw(8010194141 8305449430 8031358819 8771508130
+         8009145655 8012452127);
     my $depot;
 
     my $fh;
@@ -39,7 +40,7 @@ use strict;
 
         unless($found)
         {
-            print "uebersprungen 1: ", $file, $n;
+            print STDERR ("uebersprungen 1: ", $file, $n);
             next FILE;
         }
 
@@ -56,7 +57,7 @@ use strict;
 
         unless($found)
         {
-            print "uebersprungen 2: ", $file, $n;
+            print STDERR ("uebersprungen 2: ", $file, $n);
             next FILE;
         }
 #       Suche nach diversen Merkmalen
