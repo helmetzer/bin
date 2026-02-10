@@ -9,14 +9,14 @@ sub suche
     my @ret = ();
     my $cc = 0;
 
-    LINES: for my $line (@$rlines)
+    LINE: for my $line (@$rlines)
     {
         next LINE unless $line =~ $qr;
         push @ret, $1;
         $cc++;
         last LINE if $cc >= $count;
-    } # LINES
-    return @ret;
+    } # LINE
+    return $count == 1 ? $ret[0] : @ret;
 
 } # suche
 1;
