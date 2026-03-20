@@ -23,7 +23,7 @@ if test -n "$GDMSESSION"
 then
   hostname | grep 'HP-Laptop' && export MC_SKIN=seasons-winter16M.ini
 else
-  hostname | grep 'HP-Laptop' && setupcon -f --current-tty
+#  hostname | grep 'HP-Laptop' && setupcon -f --current-tty
   export MC_SKIN=/home/horst/.mc/skins/default.ini # path search not working
 fi
 umask 002
