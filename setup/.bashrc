@@ -15,6 +15,8 @@ alias cp='cp -a'
 alias t='cd /daten/tmp'
 alias c='cd /daten/Users/horst/Dokumente'
 alias ca='cd /daten/Users/horst/Dokumente/Bucks/atom'
+alias grep='grep -a'
+alias lftp='ftp -P 2221 lenovo'
 export TERM=xterm-256color # for mate-terminal which corrupts it
 export PERL5LIB="$HOME/bin"
 ### local modifications - END
@@ -89,7 +91,7 @@ if [ -x /usr/bin/dircolors ]; then
     #alias dir='dir --color=auto'
     #alias vdir='vdir --color=auto'
 
-    alias grep='grep --color=auto'
+#   alias grep='grep --color=auto'
     alias fgrep='fgrep --color=auto'
     alias egrep='egrep --color=auto'
 fi
