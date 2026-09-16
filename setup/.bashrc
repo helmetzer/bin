@@ -17,6 +17,7 @@ alias c='cd /daten/Users/horst/Dokumente'
 alias ca='cd /daten/Users/horst/Dokumente/Bucks/atom'
 alias grep='grep -a'
 alias lftp='ftp -P 2221 lenovo'
+alias gftp='ftp -P 2221 galaxy'
 export TERM=xterm-256color # for mate-terminal which corrupts it
 export PERL5LIB="$HOME/bin"
 ### local modifications - END

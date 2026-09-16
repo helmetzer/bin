@@ -6,7 +6,8 @@
 # Erzeuge Symlinks im aktuellen Verzeichnis.
 # Nicht gut fuer Blanks im Dateinamen
 #
-# DIR=/daten/Users/horst/Dokumente/Baader
+DIR=/daten/Users/horst/Dokumente/Scalable
+DIR=/daten/Users/horst/Dokumente/ING-DiBa
 
 
 mycopy ()

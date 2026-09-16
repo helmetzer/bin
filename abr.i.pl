@@ -2,7 +2,8 @@
 #!/usr/bin/perl -w -d:ptkdb
 #
 # Einlesen einer Wertpapierabrechnung von ING
-# Vorher umwandeln: pdftotext foo.pdf
+# Vorher umwandeln: for i in *.pdf ; do pdftotext $i ; done
+# 
 # Synopsis: cmd.pl file ...
 use strict;
 # use re 'strict';

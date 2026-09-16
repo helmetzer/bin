@@ -6,7 +6,7 @@ DRY=
 DELETE=
 DELETE=--delete
 
-BASEDIR=Users/Horst
+BASEDIR=Users/horst
 FROM=/daten/$BASEDIR
 TO=/daten2/Users/horst
 
