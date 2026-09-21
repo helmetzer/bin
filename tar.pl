@@ -4,18 +4,14 @@ use strict;
 
 use Getopt::Long;
 
-# print "@_\n"; exit;
-
 my $eol = "\n";
 
 my $full = '';
 my $test = '';
+my $TarDir = "/daten/Users/horst/Sicherung/";
 
 my $host = qx(hostname);
-# print( $host, length($host), $eol); exit;
 my $IsHP = $host =~ /HP/;
-chomp $host;
-my $IsDebian = $host eq "debian";
 
 my %TarJobs = (
     etc => {
@@ -26,29 +22,20 @@ my %TarJobs = (
         BASEDIR => $ENV{HOME},
         TOTAR => [ ".", ],
     },
-    daten => {
+);
+
+if($IsHP) {
+    $TarJobs{daten} =
+        {
         BASEDIR => "/daten/Users/horst",
         TOTAR => [ "Dokumente", "eBooks", 
           "mozilla", ".thunderbird",
-#         $IsHP ? () : "Repository", 
-              ],
-    },
-#    bettina => {
-#        BASEDIR => "/daten/Users/Bettina",
-#        TOTAR => [ ".", ],
-#    },
-#    },
-);
-
-my $TarDir = $IsHP ?
-   "/daten/Users/horst/Sicherung/Mint20" :
-   "/daten/Users/horst/Sicherung/Mint20";
-
-   # print( $TarDir, $eol); exit;
-if($IsDebian) {
-   delete $TarJobs{daten};
-   $TarDir = "/Sicherung";
-} 
+                  ]
+        };
+        $TarDir .= "Mint22.3";
+    } else {
+        $TarDir .= "Mint21.3";
+    };
 
 my $tsSuffix = ".ts";
 
@@ -113,16 +100,11 @@ for (keys %TarJobs) {
     my $TarName = "$TarDir/"
         .join(".", $_, $ts, $full ? "full" : "diff", "tgz");
     my @Tars = qw(tar -cvzf);
- #   push(@Tars, $TarName, "--exclude", "Alt", "--exclude", "VirtualBox VMs");
     push(@Tars, $TarName, "--exclude", "tmp", 
      "--exclude", "Alt", "--exclude-tag", "CACHEDIR.TAG");
     push(@Tars, "--newer", $tsFile) unless ($full);
     push(@Tars, @{$TarJobs{$_}{TOTAR}});
     unshift @Tars, qw(echo) if($test);
-    #    print ("@Tars", "\n"); exit;  # TEST
     print ((system @Tars), "\n");
 } # for
-
-# push @Tars, "$TarDir/$TarName", ".";
-
 __END__
